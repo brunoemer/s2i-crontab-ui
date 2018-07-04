@@ -12,21 +12,22 @@ If you are interested in using SCL-based nodejs binaries, try [sti-nodejs](https
 
 Usage
 ---------------------
-To build a simple [nodejs example app](https://github.com/ryanj/pillar-base) application using standalone [STI](https://github.com/openshift/source-to-image):
+To build a simple [nodejs example app](https://github.com/brunoemer/crontab-ui/) application using standalone [STI](https://github.com/openshift/source-to-image):
 
 ```
-$ s2i build https://github.com/ryanj/pillar-base ryanj/centos7-s2i-nodejs:current pillarjs
+$ docker build -t s2i-crontab-ui-base .
+$ s2i build https://github.com/brunoemer/crontab-ui s2i-crontab-ui-base s2i-crontab-ui
 ```
 
 Run the resulting image with [Docker](http://docker.io):
 
 ```
-$ docker run -p 8080:8080 pillarjs
+$ docker run -it --name s2i-crontab-ui -p 8099:8000 -e HOST='0.0.0.0' s2i-crontab-ui
 ```
 
 Access the application:
 ```
-$ curl 127.0.0.1:8080
+$ curl 127.0.0.1:8000
 ```
 
 Repository organization

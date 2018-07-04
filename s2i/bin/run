@@ -23,4 +23,5 @@ fi
 #
 [ "$1" == "--debug" ] && exec /bin/bash
 
-run_node
+supervisord -c /etc/supervisord.conf
+#run_node
