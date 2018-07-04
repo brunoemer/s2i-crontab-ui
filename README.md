@@ -1,9 +1,9 @@
 NodeJS Builder image
 ===================
 
-This repository contains the source for building various versions of
-the Node.JS application as a reproducible Docker image using
-[source-to-image](https://github.com/openshift/source-to-image).
+This repository has a Docker container with Crontab service and a UI from 
+[https://github.com/alseambusher/crontab-ui](https://github.com/alseambusher/crontab-ui)
+This source is based on [ryanj/origin-s2i-nodejs](https://github.com/ryanj/origin-s2i-nodejs/)
 
 CentOS based builder images with Nodejs binaries from nodejs.org.
 The resulting image can be run using [Docker](http://docker.io).
