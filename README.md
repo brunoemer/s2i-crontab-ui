@@ -30,6 +30,16 @@ Access the application:
 $ curl 127.0.0.1:8000
 ```
 
+Import local image to registry
+```
+$ oc get svc -n default | grep registry #get registry ip
+$ docker tag s2i-crontab-ui 172.30.92.180:5000/teste/s2i-crontab-ui #tag a local image
+$ oc login xxx
+$ oc whoami -t # get token to login docker registry
+$ docker login -u user -e email -p token 172.30.92.180:5000
+$ docker push 172.30.92.180:5000/teste/s2i-crontab-ui # push a image
+```
+
 Repository organization
 ------------------------
 * **`nodejs.org`**

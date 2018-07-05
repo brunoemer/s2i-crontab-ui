@@ -39,9 +39,9 @@ ENV HOST 0.0.0.0
 ENV PORT 8000
 ENV CRON_PATH /etc/cron.d
 ENV CRON_IN_DOCKER true
-RUN mkdir -p /var/log/crontab
-RUN chown -R 1001:0 /var/log/crontab && chmod -R g+w /var/log/crontab
+RUN mkdir -p /var/log/crontab && chown -R 1001:0 /var/log/crontab && chmod -R g+w /var/log/crontab
 RUN chmod g+w /run && chmod -R g+rw /etc/cron* && chmod g+rw /etc/sysconfig/crond && chmod g+rwx /var/spool/cron && chmod 6755 /usr/sbin/crond
+RUN chmod -R g+rw /opt/app-root/
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1001:0 /opt/app-root
