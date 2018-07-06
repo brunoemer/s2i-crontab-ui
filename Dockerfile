@@ -34,18 +34,22 @@ COPY ./contrib/ /opt/app-root
 # Install crontab dependendecies
 USER 0
 RUN yum install -y cronie supervisor
+#RUN yum install -y crontabs supervisor
 COPY supervisord.conf /etc/supervisord.conf
+RUN usermod -u 1000130000 default
 ENV HOST 0.0.0.0
 ENV PORT 8000
-ENV CRON_PATH /etc/cron.d
-ENV CRON_IN_DOCKER true
-RUN mkdir -p /var/log/crontab && chown -R 1001:0 /var/log/crontab && chmod -R g+w /var/log/crontab
-RUN chmod g+w /run && chmod -R g+rw /etc/cron* && chmod g+rw /etc/sysconfig/crond && chmod g+rwx /var/spool/cron && chmod 6755 /usr/sbin/crond
+ENV CRON_PATH /etc/crontabcustom
+#ENV CRON_IN_DOCKER true
+RUN mkdir -p /etc/crontabcustom && chown -R 1000130000:0 /etc/crontabcustom && chmod -R g+w /etc/crontabcustom
+RUN mkdir -p /var/log/crontab && chown -R 1000130000:0 /var/log/crontab && chmod -R g+w /var/log/crontab
+RUN sed -i '/session    required   pam_loginuid.so/d' /etc/pam.d/crond
+RUN chmod g+w /run && chmod -R g+rw /etc/cron.d && chmod g+rw /etc/sysconfig/crond && chmod -R g+rwx /var/spool/cron && chmod 6755 /usr/sbin/crond && chmod 6755 /usr/bin/crontab
 RUN chmod -R g+rw /opt/app-root/
 
 # Drop the root user and make the content of /opt/app-root owned by user 1001
-RUN chown -R 1001:0 /opt/app-root
-USER 1001
+RUN chown -R 1000130000:0 /opt/app-root
+USER 1000130000
 
 # Set the default CMD to print the usage of the language image
 CMD $STI_SCRIPTS_PATH/usage
