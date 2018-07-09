@@ -1,0 +1,7 @@
+APScheduler>=3.1.0
+croniter>=0.3.12
+python-crontab>=2.0.1
+python-dateutil>=2.5.2
+pytz>=2016.3
+six>=1.10.0
+tzlocal>=1.2.2

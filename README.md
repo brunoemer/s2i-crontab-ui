@@ -3,7 +3,7 @@ NodeJS Builder image
 
 This repository has a Docker container with Crontab service and a UI from 
 [https://github.com/alseambusher/crontab-ui](https://github.com/alseambusher/crontab-ui)
-This source is based on [ryanj/origin-s2i-nodejs](https://github.com/ryanj/origin-s2i-nodejs/)
+This source is based on [ryanj/origin-s2i-nodejs](https://github.com/ryanj/origin-s2i-nodejs/) and [windperson/docker-crontab](https://github.com/windperson/docker-crontab)
 
 CentOS based builder images with Nodejs binaries from nodejs.org.
 The resulting image can be run using [Docker](http://docker.io).

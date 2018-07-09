@@ -20,7 +20,7 @@ ENV NPM_RUN=start \
 
 LABEL io.k8s.description="Platform for building and running Node.js applications" \
       io.k8s.display-name="Node.js v$NODE_VERSION" \
-      io.openshift.expose-services="8080:http" \
+      io.openshift.expose-services="8000:http" \
       io.openshift.tags="builder,nodejs,nodejs$NODE_VERSION" \
       com.redhat.deployments-dir="/opt/app-root/src"
 
@@ -33,20 +33,24 @@ COPY ./contrib/ /opt/app-root
 
 # Install crontab dependendecies
 USER 0
-RUN yum install -y cronie supervisor
-#RUN yum install -y crontabs supervisor
+RUN yum install -y supervisor
 COPY supervisord.conf /etc/supervisord.conf
 RUN usermod -u 1000130000 default
 ENV HOST 0.0.0.0
 ENV PORT 8000
 ENV CRON_PATH /etc/crontabcustom
-#ENV CRON_IN_DOCKER true
+ENV CRON_IN_DOCKER true
 RUN mkdir -p /etc/crontabcustom && chown -R 1000130000:0 /etc/crontabcustom && chmod -R g+w /etc/crontabcustom
 RUN mkdir -p /var/log/crontab && chown -R 1000130000:0 /var/log/crontab && chmod -R g+w /var/log/crontab
-RUN sed -i '/session    required   pam_loginuid.so/d' /etc/pam.d/crond
-RUN chmod g+w /run && chmod -R g+rw /etc/cron.d && chmod g+rw /etc/sysconfig/crond && chmod -R g+rwx /var/spool/cron && chmod 6755 /usr/sbin/crond && chmod 6755 /usr/bin/crontab
-RUN chmod -R g+rw /opt/app-root/
 
+ENV CIRCUS_LOG_LEVEL info
+RUN yum install -y python2-pip python-devel
+RUN pip install --no-cache-dir circus
+COPY circus.ini /etc/circus/
+COPY cron /opt/app-root/cron
+RUN pip install --no-cache-dir -r /opt/app-root/cron/requirements.txt
+
+RUN chmod -R g+rw /opt/app-root/
 # Drop the root user and make the content of /opt/app-root owned by user 1001
 RUN chown -R 1000130000:0 /opt/app-root
 USER 1000130000
