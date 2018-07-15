@@ -40,6 +40,10 @@ $ docker login -u user -e email -p token docker-registry.default.svc:5000
 $ docker push docker-registry.default.svc:5000/teste/s2i-crontab-ui # push a image
 ```
 
+Default user and password:
+#### User: admin
+#### Password: admin
+
 Repository organization
 ------------------------
 * **`nodejs.org`**
